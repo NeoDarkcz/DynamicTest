@@ -1,0 +1,34 @@
+﻿@page "/"
+@using DynamicTest.Components.Dynamic
+
+<h5>Dynamic list of components:</h5>
+
+<p>
+    <button onclick=@(AddForm)>Add Form</button>
+    <button onclick=@(AddInput)>Add Input</button>
+    <button onclick=@(AddSelect)>Add Select</button>
+    <button onclick=@(AddToast)>Add Toast</button>
+</p>
+
+<p>
+    @try
+    {
+        @foreach (DynamicComponent component in ListOfComponents)
+        {
+            <DynamicComponent Type="component.Type" />
+        }
+    }
+    catch (Exception ex)
+    {
+        return;
+    }
+</p>
+
+@code {
+    private List<DynamicComponent> ListOfComponents = [];
+
+    private void AddForm() => ListOfComponents.Add(new DynamicComponent() { Type = typeof(TestForm) });
+    private void AddInput() => ListOfComponents.Add(new DynamicComponent() { Type = typeof(TestInput) });
+    private void AddSelect() => ListOfComponents.Add(new DynamicComponent() { Type = typeof(TestSelect) });
+    private void AddToast() => ListOfComponents.Add(new DynamicComponent() { Type = typeof(TestToast) });
+}
